@@ -44,13 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future initPrint() async {
     // all method from imin printer need to async await
-    await iminPrinter
-        .initPrinter(); // must init the printer first. for more exmaple.. pls refer to example tab.
+    await iminPrinter.initPrinter().then((value) {
+      print('init ${value.toString()}');
+    }); // must init the printer first. for more exmaple.. pls refer to example tab.
 
-    await iminPrinter.getPrinterStatus();
+    await iminPrinter.getPrinterStatus().then((value) {
+      print(value.toString());
+    });
   }
 
   Future printImin() async {
+    // await iminPrinter.printQrCode('https://www.imin.sg');
+
     await iminPrinter.printText('print example',
         style: IminTextStyle(wordWrap: true));
   }
