@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imin_printer/column_maker.dart';
+import 'package:imin_printer/enums.dart';
 import 'package:imin_printer/imin_printer.dart';
 import 'package:imin_printer/imin_style.dart';
 
@@ -54,10 +56,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future printImin() async {
-    // await iminPrinter.printQrCode('https://www.imin.sg');
+    await iminPrinter.printQrCode('https://www.imin.sg');
 
-    await iminPrinter.printText('print example',
+    await iminPrinter.printText('สวัสดีครับ IMIN',
         style: IminTextStyle(wordWrap: true));
+    await iminPrinter.printColumnsText(cols: [
+      ColumnMaker(
+          text: '1', width: 1, fontSize: 26, align: IminPrintAlign.center),
+      ColumnMaker(
+          text: 'iMin', width: 2, fontSize: 26, align: IminPrintAlign.left),
+      ColumnMaker(
+          text: 'iMin', width: 1, fontSize: 26, align: IminPrintAlign.right)
+    ]);
+
+    await iminPrinter.printAndFeedPaper(100);
+    await iminPrinter.partialCut();
   }
 
   @override
@@ -68,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-          child:
-              ElevatedButton(onPressed: printImin, child: Text('Print IMIN'))),
+          child: ElevatedButton(
+              onPressed: printImin, child: Text('สวัสดีครับ IMIN'))),
     );
   }
 }
